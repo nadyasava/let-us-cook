@@ -9,3 +9,4 @@ backend/__pycache__
 
 # Environment
 .env
+node_modules
