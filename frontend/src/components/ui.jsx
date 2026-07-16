@@ -14,18 +14,35 @@ export function Badge({ children, tone = "daun" }) {
   );
 }
 
-const FLAME_COUNT = { Mudah: 1, Sedang: 2, Sulit: 3 };
+const FLAME_COUNT = {
+  // English (sesuai dummy recipe)
+  Easy: 1,
+  Medium: 2,
+  Hard: 3,
+
+  // Indonesia (kalau nanti dipakai)
+  Mudah: 1,
+  Sedang: 2,
+  Sulit: 3,
+};
 
 export function DifficultyFlames({ difficulty }) {
   const count = FLAME_COUNT[difficulty] || 1;
+
   return (
-    <span className="inline-flex items-center gap-1" title={`Tingkat kesulitan: ${difficulty}`}>
+    <span
+      className="inline-flex items-center gap-1"
+      title={`Tingkat kesulitan: ${difficulty}`}
+    >
       {[0, 1, 2].map((i) => (
-        <span key={i} className={i < count ? "opacity-100" : "opacity-15"}>
+        <span key={i} className={i < count ? "opacity-100" : "opacity-20"}>
           🔥
         </span>
       ))}
-      <span className="ml-1 text-xs font-semibold text-ink-light">{difficulty}</span>
+
+      <span className="ml-1 text-xs font-semibold text-ink-light">
+        {difficulty}
+      </span>
     </span>
   );
 }
