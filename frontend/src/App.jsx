@@ -1,81 +1,357 @@
 import { useEffect, useState } from 'react'
 import { api } from './api'
+
 import Navbar from './components/Navbar'
 import UploadPhoto from './components/UploadPhoto'
+import ConfirmIngredients from './components/ConfirmIngredients'
 import IngredientManager from './components/IngredientManager'
 import RecipeCard from './components/RecipeCard'
 import RecipeDetail from './components/RecipeDetail'
 import FavoritesHistory from './components/FavoritesHistory'
 
-export default function App() {
-  const [tab, setTab] = useState('cook')
-  const [detectedFood, setDetectedFood] = useState(null)
-  const [recipes, setRecipes] = useState([])
-  const [loadingRecipes, setLoadingRecipes] = useState(false)
-  const [activeRecipe, setActiveRecipe] = useState(null)
-  const [favoriteIds, setFavoriteIds] = useState(new Set())
 
-  async function refreshFavoriteIds() {
-    const favs = await api.listFavorites()
-    setFavoriteIds(new Set(favs.map((f) => f.id)))
-  }
+export default function App(){
 
-  useEffect(() => {
-    refreshFavoriteIds()
-  }, [])
+const [tab,setTab]=useState("cook")
 
-  useEffect(() => {
-    if (!detectedFood) return
-    setLoadingRecipes(true)
-    api
-      .recommendRecipes(detectedFood)
-      .then(setRecipes)
-      .finally(() => setLoadingRecipes(false))
-  }, [detectedFood])
+const [activeStep,setActiveStep]=useState(1)
 
-  return (
-    <div className="min-h-screen">
-      <Navbar active={tab} onChange={setTab} />
+const [detectedFood,setDetectedFood]=useState(null)
 
-      <main className="px-6">
-        {tab === 'cook' && (
-          <>
-            <UploadPhoto onDetected={setDetectedFood} />
+const [finalIngredients,setFinalIngredients]=useState([])
 
-            <section className="max-w-3xl mx-auto pb-16">
-              {loadingRecipes && (
-                <p className="text-center text-sm text-ink/50 animate-pulse">
-                  Mencari resep yang cocok...
-                </p>
-              )}
+const [recipes,setRecipes]=useState([])
 
-              {!loadingRecipes && recipes.length > 0 && (
-                <>
-                  <h2 className="font-display text-2xl font-semibold mb-4">
-                    Rekomendasi resep
-                  </h2>
-                  <div className="grid gap-3">
-                    {recipes.map((r) => (
-                      <RecipeCard key={r.id} recipe={r} onOpen={setActiveRecipe} />
-                    ))}
-                  </div>
-                </>
-              )}
-            </section>
-          </>
-        )}
+const [loadingRecipes,setLoadingRecipes]=useState(false)
 
-        {tab === 'fridge' && <IngredientManager />}
+const [activeRecipe,setActiveRecipe]=useState(null)
 
-        {tab === 'saved' && <FavoritesHistory onOpen={setActiveRecipe} />}
-      </main>
+const [favoriteIds,setFavoriteIds]=useState(new Set())
 
-      <RecipeDetail
-        recipe={activeRecipe}
-        isFavorite={activeRecipe ? favoriteIds.has(activeRecipe.id) : false}
-        onToggleFavorite={refreshFavoriteIds}
-        onClose={() => setActiveRecipe(null)}
-      />
-    </div>
-  )
+
+
+async function refreshFavoriteIds(){
+
+ const favs = await api.listFavorites()
+
+ setFavoriteIds(
+   new Set(
+     favs.map(f=>f.id)
+   )
+ )
+
+}
+
+
+
+useEffect(()=>{
+ refreshFavoriteIds()
+},[])
+
+
+
+
+async function handleFindRecipes(
+ ingredientsList
+){
+
+ setFinalIngredients(
+   ingredientsList
+ )
+
+
+ setActiveStep(3)
+
+ setLoadingRecipes(true)
+
+
+
+ try{
+
+
+   const ingredientNames =
+    ingredientsList.map(
+      i=>i.name.toLowerCase()
+    )
+
+
+   const data =
+    await api.recommendRecipes(
+      ingredientNames
+    )
+
+
+   setRecipes(data)
+
+
+
+ }catch(err){
+
+   console.error(err)
+
+ }
+
+ finally{
+
+   setLoadingRecipes(false)
+
+ }
+
+}
+
+
+
+
+function handleReset(){
+
+ setDetectedFood(null)
+
+ setFinalIngredients([])
+
+ setRecipes([])
+
+ setActiveStep(1)
+
+}
+
+
+
+return(
+
+<div className="min-h-screen bg-paper text-ink pb-20">
+
+
+<Navbar
+ active={tab}
+ onChange={setTab}
+/>
+
+
+
+<main className="px-6 max-w-3xl mx-auto">
+
+
+
+{
+tab==="cook" &&
+
+<>
+
+
+<div className="flex items-center justify-center gap-4 py-8">
+
+{
+[1,2,3].map(step=>(
+
+<div
+key={step}
+className={`
+w-8 h-8 rounded-full flex items-center justify-center
+font-semibold text-sm
+${
+activeStep>=step
+?
+"bg-ink text-paper"
+:
+"bg-border text-ink/40"
+}
+`}
+>
+
+{step}
+
+</div>
+
+))
+}
+
+</div>
+
+
+
+
+
+{
+activeStep===1 &&
+
+<UploadPhoto
+
+onDetected={(food)=>{
+
+setDetectedFood(food)
+
+setActiveStep(2)
+
+}}
+
+/>
+
+}
+
+
+
+
+{
+activeStep===2 &&
+
+<ConfirmIngredients
+
+initialFood={detectedFood}
+
+onBack={handleReset}
+
+onConfirm={handleFindRecipes}
+
+/>
+
+}
+
+
+
+
+{
+activeStep===3 &&
+
+<section>
+
+
+{
+loadingRecipes ?
+
+<div className="text-center py-10">
+
+<p>
+Meracik rekomendasi...
+</p>
+
+</div>
+
+
+:
+
+
+<>
+
+
+<div className="mb-6">
+
+<h2 className="text-2xl font-semibold">
+Rekomendasi resep
+</h2>
+
+
+<p className="text-xs text-ink/50">
+
+Bahan:
+
+{" "}
+
+{
+finalIngredients
+.map(
+i=>i.name
+)
+.join(", ")
+}
+
+</p>
+
+
+</div>
+
+
+
+<div className="grid gap-4">
+
+{
+recipes.map(
+recipe=>(
+
+<RecipeCard
+
+key={recipe.id}
+
+recipe={recipe}
+
+onOpen={setActiveRecipe}
+
+/>
+
+)
+
+)
+
+}
+
+</div>
+
+
+</>
+
+
+}
+
+
+
+</section>
+
+}
+
+
+
+</>
+
+}
+
+
+
+{
+tab==="fridge" &&
+<IngredientManager/>
+
+}
+
+
+{
+tab==="saved" &&
+<FavoritesHistory
+onOpen={setActiveRecipe}
+/>
+
+}
+
+
+
+</main>
+
+
+
+<RecipeDetail
+
+recipe={activeRecipe}
+
+isFavorite={
+activeRecipe
+?
+favoriteIds.has(activeRecipe.id)
+:
+false
+}
+
+onToggleFavorite={
+refreshFavoriteIds
+}
+
+onClose={()=>
+setActiveRecipe(null)
+}
+
+/>
+
+
+
+</div>
+
+)
+
 }

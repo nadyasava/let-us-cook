@@ -1,63 +1,349 @@
-function gaugeColor(score) {
-  if (score >= 80) return '#4C7A5A' // sage
-  if (score >= 40) return '#F2B705' // yolk
-  return '#E2492F' // tomato
+function getEmoji(recipe) {
+  const emojis = {
+    egg: "🍳",
+    chicken: "🍗",
+    tofu: "🥢",
+    spinach: "🥬",
+    beef: "🥩",
+    salmon: "🐟",
+    tempeh: "🍘",
+  }
+
+  return emojis[recipe.main_ingredient] || "🍲"
 }
 
-function MatchGauge({ score }) {
-  const radius = 22
-  const circumference = 2 * Math.PI * radius
-  const offset = circumference * (1 - score / 100)
-  const color = gaugeColor(score)
+
+function Badge({ children, tone = "daun" }) {
+  const tones = {
+    daun: "bg-green-100 text-green-700 border-green-200",
+    kunyit: "bg-yellow-100 text-yellow-700 border-yellow-200",
+    cabai: "bg-red-100 text-red-700 border-red-200",
+    ink: "bg-gray-100 text-gray-700 border-gray-200",
+  }
 
   return (
-    <div className="relative w-14 h-14 shrink-0">
-      <svg viewBox="0 0 56 56" className="w-14 h-14 -rotate-90">
-        <circle cx="28" cy="28" r={radius} fill="none" stroke="#E4E2D8" strokeWidth="5" />
-        <circle
-          cx="28"
-          cy="28"
-          r={radius}
-          fill="none"
-          stroke={color}
-          strokeWidth="5"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-        />
-      </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold">
-        {score}%
-      </span>
-    </div>
+    <span
+      className={`
+        inline-flex items-center gap-1 
+        rounded-full border px-2.5 py-1 
+        text-xs font-semibold
+        ${tones[tone]}
+      `}
+    >
+      {children}
+    </span>
   )
 }
 
-export default function RecipeCard({ recipe, onOpen }) {
+
+function DifficultyFlames({ difficulty }) {
+  const map = {
+    Easy: 1,
+    Mudah: 1,
+
+    Medium: 2,
+    Sedang: 2,
+
+    Hard: 3,
+    Sulit: 3,
+  }
+
+  const count = map[difficulty] || 1
+
+
   return (
-    <button
-      onClick={() => onOpen(recipe)}
-      className="text-left w-full bg-surface border border-border rounded-card p-4 flex gap-4 items-center hover:border-ink/30 transition"
+    <span className="inline-flex items-center gap-1">
+      {[0,1,2].map((i)=>(
+        <span 
+          key={i}
+          className={i < count ? "opacity-100" : "opacity-20"}
+        >
+          🔥
+        </span>
+      ))}
+
+      <span className="ml-1 text-xs font-semibold text-gray-500">
+        {difficulty}
+      </span>
+    </span>
+  )
+}
+
+
+export default function RecipeCard({
+  recipe,
+  onOpen,
+  onToggleFavorite
+}) {
+
+  const matchPercent = recipe.match_score ?? 0
+
+  const missingCount =
+    recipe.missing_ingredients?.length ?? 0
+
+
+  let matchTone = "cabai"
+
+  if(matchPercent >= 80){
+    matchTone = "daun"
+  }
+  else if(matchPercent >= 40){
+    matchTone = "kunyit"
+  }
+
+
+  const matchColors = {
+    daun:
+      "border-green-500/60 text-green-700",
+
+    kunyit:
+      "border-yellow-500/60 text-yellow-700",
+
+    cabai:
+      "border-red-500/60 text-red-700",
+  }
+
+
+  return (
+    <div
+      className="
+        rounded-2xl
+        bg-white
+        p-5
+        shadow-lg
+        border border-gray-100
+        hover:-translate-y-1
+        transition
+      "
     >
-      <MatchGauge score={recipe.match_score ?? 100} />
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
-          <h3 className="font-display font-semibold text-lg truncate">{recipe.name}</h3>
-          {recipe.is_primary_match && (
-            <span className="text-[10px] uppercase tracking-wide bg-yolk/20 text-ink/70 px-2 py-0.5 rounded-full shrink-0">
-              cocok
-            </span>
-          )}
+
+      {/* Header */}
+      <div className="
+        flex
+        items-start
+        justify-between
+        gap-3
+      ">
+
+        <div className="
+          flex
+          items-start
+          gap-3
+        ">
+
+          <span className="text-4xl">
+            {getEmoji(recipe)}
+          </span>
+
+
+          <div>
+
+            <h3
+              className="
+                text-lg
+                font-bold
+                text-gray-800
+                leading-tight
+              "
+            >
+              {recipe.name}
+            </h3>
+
+
+            <div className="
+              mt-2
+              flex
+              flex-wrap
+              items-center
+              gap-3
+              text-xs
+              text-gray-500
+            ">
+
+              <span>
+                ⏱ {recipe.cook_time_minutes} menit
+              </span>
+
+
+              <DifficultyFlames
+                difficulty={recipe.difficulty}
+              />
+
+            </div>
+
+          </div>
+
         </div>
-        <p className="text-xs text-ink/50 mt-0.5">
-          {recipe.cook_time_minutes} menit &middot; {recipe.difficulty} &middot; {recipe.calories} kal
-        </p>
-        {recipe.missing_ingredients?.length > 0 && (
-          <p className="text-xs text-tomato mt-1 truncate">
-            Kurang: {recipe.missing_ingredients.join(', ')}
+
+
+
+        {/* Match Score */}
+
+        <div
+          className={`
+            shrink-0
+            rounded-xl
+            border-2
+            px-3
+            py-2
+            text-center
+            ${matchColors[matchTone]}
+          `}
+        >
+
+          <p className="
+            font-bold
+            text-lg
+            leading-none
+          ">
+            {matchPercent}%
           </p>
-        )}
+
+
+          <p className="
+            text-[10px]
+            uppercase
+            tracking-wide
+            font-semibold
+          ">
+            cocok
+          </p>
+
+        </div>
+
       </div>
-    </button>
+
+
+
+      {/* Badge */}
+
+      <div className="
+        mt-4
+        flex
+        flex-wrap
+        gap-2
+      ">
+
+        {
+          missingCount === 0 ?
+
+          (
+            <Badge tone="daun">
+              ✅ Semua bahan tersedia
+            </Badge>
+          )
+
+          :
+
+          (
+            <Badge tone="cabai">
+              🛒 Kurang {missingCount} bahan
+            </Badge>
+          )
+        }
+
+
+        <Badge tone="kunyit">
+          🔥 {recipe.calories} kkal
+        </Badge>
+
+
+        {
+          recipe.is_primary_match &&
+          (
+            <Badge tone="daun">
+              ⭐ Bahan utama cocok
+            </Badge>
+          )
+        }
+
+
+      </div>
+
+
+
+
+      {/* Missing ingredients */}
+
+      {
+        missingCount > 0 &&
+
+        <p className="
+          mt-3
+          text-xs
+          text-red-600
+          truncate
+        ">
+          Kurang:
+          {" "}
+          {recipe.missing_ingredients.join(", ")}
+        </p>
+
+      }
+
+
+
+      {/* Action */}
+
+      <div className="
+        mt-5
+        flex
+        items-center
+        justify-between
+      ">
+
+
+        <button
+          onClick={()=>onOpen(recipe)}
+          className="
+            rounded-full
+            bg-green-600
+            px-5
+            py-2
+            text-sm
+            font-semibold
+            text-white
+            shadow-md
+            hover:bg-green-700
+            hover:-translate-y-0.5
+            transition
+          "
+        >
+          Lihat resep →
+        </button>
+
+
+
+        {
+          onToggleFavorite &&
+
+          <button
+            onClick={()=>
+              onToggleFavorite(recipe)
+            }
+            className="
+              rounded-full
+              p-2
+              text-2xl
+              hover:scale-110
+              transition
+            "
+          >
+            {
+              recipe.is_favorite
+              ?
+              "⭐"
+              :
+              "☆"
+            }
+
+          </button>
+        }
+
+
+      </div>
+
+
+    </div>
   )
 }

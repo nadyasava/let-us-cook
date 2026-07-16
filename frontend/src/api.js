@@ -34,10 +34,15 @@ export const api = {
   deleteIngredient: (id) =>
     fetch(`${BASE}/ingredients/${id}`, { method: 'DELETE' }).then(handle),
 
-  recommendRecipes: (detectedFood) =>
-    fetch(`${BASE}/recipes/recommend?detected_food=${encodeURIComponent(detectedFood || '')}`).then(
-      handle,
-    ),
+  recommendRecipes: (ingredients = []) => {
+  const params = new URLSearchParams({
+    detected_food: ingredients.join(","),
+  })
+
+  return fetch(
+    `${BASE}/recipes/recommend?${params}`
+  ).then(handle)
+},
 
   listRecipes: () => fetch(`${BASE}/recipes`).then(handle),
 

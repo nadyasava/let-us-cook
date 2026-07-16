@@ -13,11 +13,30 @@ DETECTION_PROMPT = (
 )
 
 
-def _mock_detection():
-    # Used when ANTHROPIC_API_KEY is not configured, so the prototype still
-    # runs end to end for local demo purposes without a live API key.
-    return {"food_name": "egg", "confidence": "low", "mocked": True}
+import random
 
+
+MOCK_FOODS = [
+    "egg",
+    "chicken",
+    "tofu",
+    "spinach",
+    "beef",
+    "salmon",
+    "tempeh",
+]
+
+
+def _mock_detection():
+    food = random.choice(MOCK_FOODS)
+
+    return {
+        "food_name": food,
+        "confidence": random.choice(
+            ["high", "medium", "low"]
+        ),
+        "mocked": True
+    }
 
 @detect_bp.route("/api/detect", methods=["POST"])
 def detect_food():
