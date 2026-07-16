@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 const TABS = [
   { id: 'cook', label: 'Masak' },
-  { id: 'saved', label: 'Favorit & Riwayat' },
+  { id: 'favorites', label: 'Favorit' },
+  { id: 'history', label: 'Riwayat' },
 ];
 
 export default function Navbar({ active, onChange }) {

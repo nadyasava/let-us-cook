@@ -13,7 +13,7 @@ function getEmoji(recipe) {
   return emojis[recipe.main_ingredient] || "🍲";
 }
 
-export default function RecipeCard({ recipe, onOpen, onToggleFavorite }) {
+export default function RecipeCard({ recipe, onOpen, onToggleFavorite, hideMatchScore }) {
   const matchPercent = recipe.match_score ?? 0;
   const missingCount = recipe.missing_ingredients?.length ?? 0;
 
@@ -81,31 +81,33 @@ export default function RecipeCard({ recipe, onOpen, onToggleFavorite }) {
         )}
 
         {/* Enhanced Match Score (Warna berubah dinamis di sini) */}
-        <div
-          className={`
-            flex
-            flex-col
-            items-center
-            justify-center
-            min-w-[56px]
-            h-[56px]
-            rounded-xl
-            border
-            p-1
-            leading-none
-            shadow-sm
-            transition-colors
-            duration-300
-            ${matchColors[matchTone]}
-          `}
-        >
-          <span className="text-xl font-extrabold tracking-tighter">
-            {matchPercent}%
-          </span>
-          <span className="text-[9px] uppercase font-bold tracking-wider mt-0.5 opacity-90">
-            Cocok
-          </span>
-        </div>
+        {!hideMatchScore && (
+          <div
+            className={`
+              flex
+              flex-col
+              items-center
+              justify-center
+              min-w-[56px]
+              h-[56px]
+              rounded-xl
+              border
+              p-1
+              leading-none
+              shadow-sm
+              transition-colors
+              duration-300
+              ${matchColors[matchTone]}
+            `}
+          >
+            <span className="text-xl font-extrabold tracking-tighter">
+              {matchPercent}%
+            </span>
+            <span className="text-[9px] uppercase font-bold tracking-wider mt-0.5 opacity-90">
+              Cocok
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Main Content Area */}

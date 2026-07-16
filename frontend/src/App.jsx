@@ -200,7 +200,9 @@ export default function App() {
           </>
         )}
 
-        {tab === "saved" && <FavoritesHistory onOpen={handleOpenRecipe} />}
+        {tab === "favorites" && <FavoritesHistory mode="favorites" onOpen={handleOpenRecipe} />}
+
+        {tab === "history" && <FavoritesHistory mode="history" onOpen={handleOpenRecipe} />}
       </main>
 
       <RecipeDetail
