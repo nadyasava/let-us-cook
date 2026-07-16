@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Nasi Goreng Telur",
+    "main_ingredient": "egg",
+    "cook_time_minutes": 15,
+    "difficulty": "Easy",
+    "calories": 420,
+    "protein_g": 14,
+    "carbs_g": 55,
+    "fat_g": 16,
+    "ingredients": ["egg", "cooked rice", "garlic", "shallot", "soy sauce", "chili"],
+    "steps": [
+      "Panaskan minyak, tumis bawang putih dan bawang merah cincang hingga harum.",
+      "Masukkan telur, orak arik hingga setengah matang.",
+      "Tambahkan nasi, aduk rata dengan kecap dan cabai sesuai selera.",
+      "Masak dengan api sedang selama 5 menit sambil terus diaduk.",
+      "Sajikan selagi hangat."
+    ]
+  },
+  {
+    "name": "Ayam Goreng Bawang Putih",
+    "main_ingredient": "chicken",
+    "cook_time_minutes": 30,
+    "difficulty": "Easy",
+    "calories": 510,
+    "protein_g": 38,
+    "carbs_g": 12,
+    "fat_g": 32,
+    "ingredients": ["chicken", "garlic", "salt", "pepper", "cooking oil"],
+    "steps": [
+      "Marinasi ayam dengan bawang putih halus, garam, dan lada selama 15 menit.",
+      "Panaskan minyak secukupnya di wajan.",
+      "Goreng ayam hingga kecokelatan dan matang merata, sekitar 15 menit.",
+      "Angkat dan tiriskan minyak sebelum disajikan."
+    ]
+  },
+  {
+    "name": "Tumis Tahu Sayur",
+    "main_ingredient": "tofu",
+    "cook_time_minutes": 20,
+    "difficulty": "Easy",
+    "calories": 280,
+    "protein_g": 16,
+    "carbs_g": 20,
+    "fat_g": 14,
+    "ingredients": ["tofu", "carrot", "cabbage", "garlic", "soy sauce"],
+    "steps": [
+      "Potong tahu dadu, goreng sebentar hingga permukaannya kering.",
+      "Tumis bawang putih, masukkan wortel dan kubis hingga layu.",
+      "Masukkan tahu goreng, tambahkan kecap asin, aduk rata.",
+      "Masak 3 menit lagi lalu angkat."
+    ]
+  },
+  {
+    "name": "Sup Bening Bayam",
+    "main_ingredient": "spinach",
+    "cook_time_minutes": 15,
+    "difficulty": "Easy",
+    "calories": 120,
+    "protein_g": 6,
+    "carbs_g": 14,
+    "fat_g": 3,
+    "ingredients": ["spinach", "corn", "carrot", "garlic", "salt"],
+    "steps": [
+      "Didihkan air dengan bawang putih geprek dan sedikit garam.",
+      "Masukkan jagung dan wortel, masak hingga empuk.",
+      "Terakhir masukkan bayam, masak sebentar hingga layu.",
+      "Angkat dan sajikan hangat."
+    ]
+  },
+  {
+    "name": "Rendang Daging Sederhana",
+    "main_ingredient": "beef",
+    "cook_time_minutes": 90,
+    "difficulty": "Hard",
+    "calories": 620,
+    "protein_g": 42,
+    "carbs_g": 18,
+    "fat_g": 40,
+    "ingredients": ["beef", "coconut milk", "garlic", "shallot", "chili", "ginger"],
+    "steps": [
+      "Haluskan bawang putih, bawang merah, cabai, dan jahe.",
+      "Tumis bumbu halus hingga harum, masukkan daging, aduk rata.",
+      "Tuang santan, masak dengan api kecil sambil sesekali diaduk.",
+      "Masak hingga santan menyusut dan bumbu meresap, sekitar 1.5 jam.",
+      "Angkat setelah kuah mengental dan berwarna kecokelatan."
+    ]
+  },
+  {
+    "name": "Salmon Panggang Lemon",
+    "main_ingredient": "salmon",
+    "cook_time_minutes": 25,
+    "difficulty": "Medium",
+    "calories": 380,
+    "protein_g": 34,
+    "carbs_g": 6,
+    "fat_g": 24,
+    "ingredients": ["salmon", "lemon", "garlic", "olive oil", "salt", "pepper"],
+    "steps": [
+      "Lumuri salmon dengan olive oil, garam, lada, dan perasan lemon.",
+      "Panaskan oven pada suhu 200 derajat celcius.",
+      "Panggang salmon selama 15 sampai 18 menit.",
+      "Sajikan dengan sisa irisan lemon."
+    ]
+  },
+  {
+    "name": "Omelet Sayur",
+    "main_ingredient": "egg",
+    "cook_time_minutes": 10,
+    "difficulty": "Easy",
+    "calories": 260,
+    "protein_g": 16,
+    "carbs_g": 8,
+    "fat_g": 18,
+    "ingredients": ["egg", "onion", "tomato", "cheese", "salt"],
+    "steps": [
+      "Kocok telur dengan sedikit garam.",
+      "Tumis bawang dan tomat cincang sebentar.",
+      "Tuang kocokan telur, taburi keju di atasnya.",
+      "Masak dengan api kecil hingga matang, lipat dua."
+    ]
+  },
+  {
+    "name": "Mie Goreng Ayam",
+    "main_ingredient": "chicken",
+    "cook_time_minutes": 20,
+    "difficulty": "Easy",
+    "calories": 480,
+    "protein_g": 22,
+    "carbs_g": 60,
+    "fat_g": 16,
+    "ingredients": ["chicken", "instant noodles", "cabbage", "carrot", "soy sauce", "garlic"],
+    "steps": [
+      "Rebus mie hingga setengah matang, tiriskan.",
+      "Tumis bawang putih, masukkan potongan ayam hingga matang.",
+      "Tambahkan kubis dan wortel, tumis sebentar.",
+      "Masukkan mie dan kecap, aduk rata hingga matang."
+    ]
+  },
+  {
+    "name": "Tempe Orek Manis",
+    "main_ingredient": "tempeh",
+    "cook_time_minutes": 20,
+    "difficulty": "Easy",
+    "calories": 310,
+    "protein_g": 18,
+    "carbs_g": 24,
+    "fat_g": 16,
+    "ingredients": ["tempeh", "sweet soy sauce", "garlic", "shallot", "chili"],
+    "steps": [
+      "Potong tempe kecil memanjang, goreng hingga kering.",
+      "Tumis bawang putih, bawang merah, dan cabai hingga harum.",
+      "Masukkan kecap manis, aduk hingga mendidih.",
+      "Masukkan tempe goreng, aduk rata hingga bumbu menempel."
+    ]
+  }
+]
