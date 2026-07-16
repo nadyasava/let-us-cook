@@ -36,13 +36,7 @@ def _match_score(recipe, fridge_set):
         score = 0
 
 
-    # bonus kalau bahan utama tersedia
-    if recipe["main_ingredient"].lower() in fridge_set:
-        score += 25
-
-
-    return min(score, 100), missing
-
+    return score, missing
 
 
 @recipes_bp.route("/api/recipes", methods=["GET"])
@@ -181,11 +175,8 @@ def recommend_recipes():
 
 
     results.sort(
-        key=lambda r: (
-            not r["is_primary_match"],
-            -r["match_score"]
-        )
-    )
+    key=lambda r: -r["match_score"]
+)
 
 
     return jsonify(results)
