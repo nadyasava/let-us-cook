@@ -1,12 +1,21 @@
 # Frontend
-frontend/node_modules
-frontend/dist
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
 
 # Backend
-backend/venv
-backend/__pycache__
+backend/instance/
+backend/venv/
+.venv/
+backend/__pycache__/
+backend/**/__pycache__/
 *.pyc
 
 # Environment
 .env
 node_modules
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
