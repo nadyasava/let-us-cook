@@ -1,6 +1,5 @@
 const TABS = [
   { id: 'cook', label: 'Masak' },
-  { id: 'fridge', label: 'Kulkas' },
   { id: 'saved', label: 'Favorit & Riwayat' },
 ]
 

@@ -4,7 +4,6 @@ import { api } from './api'
 import Navbar from './components/Navbar'
 import UploadPhoto from './components/UploadPhoto'
 import ConfirmIngredients from './components/ConfirmIngredients'
-import IngredientManager from './components/IngredientManager'
 import RecipeCard from './components/RecipeCard'
 import RecipeDetail from './components/RecipeDetail'
 import FavoritesHistory from './components/FavoritesHistory'
@@ -111,6 +110,16 @@ function handleReset(){
  setRecipes([])
 
  setActiveStep(1)
+
+}
+
+
+
+function handleOpenRecipe(recipe){
+
+ setActiveRecipe(recipe)
+
+ api.getRecipe(recipe.id).catch(()=>{})
 
 }
 
@@ -273,7 +282,7 @@ key={recipe.id}
 
 recipe={recipe}
 
-onOpen={setActiveRecipe}
+onOpen={handleOpenRecipe}
 
 />
 
@@ -306,16 +315,9 @@ onOpen={setActiveRecipe}
 
 
 {
-tab==="fridge" &&
-<IngredientManager/>
-
-}
-
-
-{
 tab==="saved" &&
 <FavoritesHistory
-onOpen={setActiveRecipe}
+onOpen={handleOpenRecipe}
 />
 
 }

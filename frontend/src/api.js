@@ -15,25 +15,6 @@ export const api = {
     return fetch(`${BASE}/detect`, { method: 'POST', body: form }).then(handle)
   },
 
-  listIngredients: () => fetch(`${BASE}/ingredients`).then(handle),
-
-  addIngredient: (payload) =>
-    fetch(`${BASE}/ingredients`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).then(handle),
-
-  updateIngredient: (id, payload) =>
-    fetch(`${BASE}/ingredients/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).then(handle),
-
-  deleteIngredient: (id) =>
-    fetch(`${BASE}/ingredients/${id}`, { method: 'DELETE' }).then(handle),
-
   recommendRecipes: (ingredients = []) => {
   const params = new URLSearchParams({
     detected_food: ingredients.join(","),
