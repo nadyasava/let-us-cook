@@ -153,5 +153,113 @@
       "Masukkan kecap manis, aduk hingga mendidih.",
       "Masukkan tempe goreng, aduk rata hingga bumbu menempel."
     ]
+  },
+  {
+    "name": "Udang Saus Padang",
+    "main_ingredient": "shrimp",
+    "cook_time_minutes": 25,
+    "difficulty": "Medium",
+    "calories": 340,
+    "protein_g": 28,
+    "carbs_g": 14,
+    "fat_g": 18,
+    "ingredients": ["shrimp", "chili", "garlic", "shallot", "tomato sauce", "ginger"],
+    "steps": [
+      "Bersihkan udang, sisihkan.",
+      "Haluskan cabai, bawang putih, bawang merah, dan jahe.",
+      "Tumis bumbu halus hingga harum, tambahkan saus tomat.",
+      "Masukkan udang, masak hingga berubah warna dan bumbu meresap.",
+      "Sajikan selagi hangat."
+    ]
+  },
+  {
+    "name": "Tumis Jamur Saus Tiram",
+    "main_ingredient": "mushroom",
+    "cook_time_minutes": 15,
+    "difficulty": "Easy",
+    "calories": 180,
+    "protein_g": 8,
+    "carbs_g": 16,
+    "fat_g": 9,
+    "ingredients": ["mushroom", "oyster sauce", "garlic", "carrot", "scallion"],
+    "steps": [
+      "Iris jamur dan wortel sesuai selera.",
+      "Tumis bawang putih hingga harum.",
+      "Masukkan jamur dan wortel, tumis hingga layu.",
+      "Tambahkan saus tiram dan sedikit air, masak hingga mengental.",
+      "Taburi daun bawang, angkat."
+    ]
+  },
+  {
+    "name": "Perkedel Kentang",
+    "main_ingredient": "potato",
+    "cook_time_minutes": 30,
+    "difficulty": "Medium",
+    "calories": 260,
+    "protein_g": 7,
+    "carbs_g": 34,
+    "fat_g": 11,
+    "ingredients": ["potato", "egg", "garlic", "shallot", "pepper", "salt"],
+    "steps": [
+      "Kukus atau rebus kentang hingga empuk, haluskan.",
+      "Campur kentang halus dengan bawang putih, bawang merah goreng, garam, dan lada.",
+      "Bentuk bulat pipih, celupkan ke kocokan telur.",
+      "Goreng hingga kuning kecokelatan di kedua sisi.",
+      "Tiriskan dan sajikan."
+    ]
+  },
+  {
+    "name": "Ikan Bakar Kecap",
+    "main_ingredient": "fish",
+    "cook_time_minutes": 30,
+    "difficulty": "Medium",
+    "calories": 320,
+    "protein_g": 30,
+    "carbs_g": 10,
+    "fat_g": 16,
+    "ingredients": ["fish", "sweet soy sauce", "garlic", "shallot", "lemon", "chili"],
+    "steps": [
+      "Bersihkan ikan, lumuri perasan lemon dan garam, diamkan 10 menit.",
+      "Haluskan bawang putih, bawang merah, dan cabai, campur dengan kecap manis.",
+      "Lumuri ikan dengan bumbu, panggang atau bakar sambil dioles bumbu berkala.",
+      "Bakar hingga matang dan sedikit gosong di pinggirnya.",
+      "Sajikan dengan sisa bumbu olesan."
+    ]
+  },
+  {
+    "name": "Capcay Kuah",
+    "main_ingredient": "cabbage",
+    "cook_time_minutes": 15,
+    "difficulty": "Easy",
+    "calories": 150,
+    "protein_g": 7,
+    "carbs_g": 16,
+    "fat_g": 6,
+    "ingredients": ["cabbage", "carrot", "cauliflower", "garlic", "chicken stock"],
+    "steps": [
+      "Potong-potong semua sayuran sesuai selera.",
+      "Tumis bawang putih hingga harum.",
+      "Tuang kaldu ayam, masak hingga mendidih.",
+      "Masukkan sayuran mulai dari yang paling keras, masak hingga matang tapi masih renyah.",
+      "Bumbui dengan garam dan lada, sajikan hangat."
+    ]
+  },
+  {
+    "name": "Sate Ayam Bumbu Kacang",
+    "main_ingredient": "chicken",
+    "cook_time_minutes": 35,
+    "difficulty": "Medium",
+    "calories": 400,
+    "protein_g": 30,
+    "carbs_g": 16,
+    "fat_g": 24,
+    "ingredients": ["chicken", "peanut", "sweet soy sauce", "garlic", "shallot", "chili"],
+    "steps": [
+      "Potong dada ayam dadu, tusuk dengan tusukan sate.",
+      "Haluskan kacang goreng, bawang putih, bawang merah, dan cabai.",
+      "Campur bumbu halus dengan kecap manis dan sedikit air jadi saus kacang.",
+      "Bakar sate sambil dioles sedikit minyak hingga matang.",
+      "Siram dengan saus kacang sebelum disajikan."
+    ]
   }
 ]

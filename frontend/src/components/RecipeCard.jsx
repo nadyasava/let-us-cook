@@ -8,7 +8,7 @@ function getEmoji(recipe) {
     spinach: "🥬",
     beef: "🥩",
     salmon: "🐟",
-    tempeh: "🍘",
+    tempe: "🍘" ,
   };
   return emojis[recipe.main_ingredient] || "🍲";
 }

@@ -1,5 +1,5 @@
 import json
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from database import get_db
 
 favorites_bp = Blueprint("favorites", __name__)
@@ -12,16 +12,30 @@ def _serialize_recipe(row):
     return r
 
 
+def _serialize_favorite(row):
+    r = _serialize_recipe(row)
+    r["match_score"] = row["match_score"] if row["match_score"] is not None else 0
+    r["missing_ingredients"] = (
+        json.loads(row["missing_ingredients_json"])
+        if row["missing_ingredients_json"]
+        else []
+    )
+    r["is_primary_match"] = bool(row["is_primary_match"])
+    r.pop("missing_ingredients_json", None)
+    return r
+
+
 @favorites_bp.route("/api/favorites", methods=["GET"])
 def list_favorites():
     conn = get_db()
     rows = conn.execute(
-        """SELECT r.* FROM recipes r
+        """SELECT r.*, f.match_score, f.missing_ingredients_json, f.is_primary_match
+           FROM recipes r
            JOIN favorites f ON f.recipe_id = r.id
            ORDER BY f.created_at DESC"""
     ).fetchall()
     conn.close()
-    return jsonify([_serialize_recipe(r) for r in rows])
+    return jsonify([_serialize_favorite(r) for r in rows])
 
 
 @favorites_bp.route("/api/favorites/<int:recipe_id>", methods=["POST"])
@@ -32,8 +46,19 @@ def add_favorite(recipe_id):
         conn.close()
         return jsonify({"error": "Recipe not found"}), 404
 
+    body = request.get_json(silent=True) or {}
+    match_score = body.get("match_score", 0)
+    missing_ingredients = json.dumps(body.get("missing_ingredients", []))
+    is_primary_match = 1 if body.get("is_primary_match") else 0
+
     conn.execute(
-        "INSERT OR IGNORE INTO favorites (recipe_id) VALUES (?)", (recipe_id,)
+        """INSERT INTO favorites (recipe_id, match_score, missing_ingredients_json, is_primary_match)
+           VALUES (?, ?, ?, ?)
+           ON CONFLICT(recipe_id) DO UPDATE SET
+             match_score = excluded.match_score,
+             missing_ingredients_json = excluded.missing_ingredients_json,
+             is_primary_match = excluded.is_primary_match""",
+        (recipe_id, match_score, missing_ingredients, is_primary_match),
     )
     conn.commit()
     conn.close()

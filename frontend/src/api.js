@@ -31,7 +31,12 @@ export const api = {
 
   listFavorites: () => fetch(`${BASE}/favorites`).then(handle),
 
-  addFavorite: (id) => fetch(`${BASE}/favorites/${id}`, { method: 'POST' }).then(handle),
+  addFavorite: (id, meta = {}) =>
+    fetch(`${BASE}/favorites/${id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(meta),
+    }).then(handle),
 
   removeFavorite: (id) => fetch(`${BASE}/favorites/${id}`, { method: 'DELETE' }).then(handle),
 

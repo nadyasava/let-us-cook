@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { api } from '../api'
+import CameraCapture from './CameraCapture'
 
 const STABLE_LOADING_STEPS = [
   "Sedang menghubungkan ke inti AI...",
@@ -18,6 +19,7 @@ export default function UploadPhoto({ onDetected }) {
   const [error, setError] = useState(null)
   const [dragOver, setDragOver] = useState(false)
   const [loadingStepIndex, setLoadingStepIndex] = useState(0)
+  const [cameraOpen, setCameraOpen] = useState(false)
 
   useEffect(() => {
     let interval
@@ -113,14 +115,17 @@ export default function UploadPhoto({ onDetected }) {
               Pilih foto
             </button>
             
-            <label className="px-5 py-2.5 rounded-full border border-border bg-surface text-sm font-semibold cursor-pointer hover:bg-paper hover:border-ink/30 transition-all active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setCameraOpen(true)}
+              className="px-5 py-2.5 rounded-full border border-border bg-surface text-sm font-semibold cursor-pointer hover:bg-paper hover:border-ink/30 transition-all active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-ink/60 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               Ambil foto
-              <input type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => handleFile(e.target.files?.[0])} />
-            </label>
+            </button>
           </div>
 
           <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleFile(e.target.files?.[0])} />
@@ -161,6 +166,16 @@ export default function UploadPhoto({ onDetected }) {
         )}
 
       </div>
+
+      {cameraOpen && (
+        <CameraCapture
+          onCapture={(file) => {
+            setCameraOpen(false)
+            handleFile(file)
+          }}
+          onClose={() => setCameraOpen(false)}
+        />
+      )}
     </section>
   )
 }

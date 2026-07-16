@@ -13,7 +13,11 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
       if (favorite) {
         await api.removeFavorite(recipe.id)
       } else {
-        await api.addFavorite(recipe.id)
+        await api.addFavorite(recipe.id, {
+          match_score: recipe.match_score,
+          missing_ingredients: recipe.missing_ingredients,
+          is_primary_match: recipe.is_primary_match,
+        })
       }
       setFavorite(!favorite)
       onToggleFavorite?.()
