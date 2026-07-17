@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { api } from '../api'
 
 export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavorite }) {
-  const [favorite, setFavorite] = useState(isFavorite)
   const [busy, setBusy] = useState(false)
 
   if (!recipe) return null
@@ -10,7 +9,7 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
   async function toggleFavorite() {
     setBusy(true)
     try {
-      if (favorite) {
+      if (isFavorite) {
         await api.removeFavorite(recipe.id)
       } else {
         await api.addFavorite(recipe.id, {
@@ -19,7 +18,6 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
           is_primary_match: recipe.is_primary_match,
         })
       }
-      setFavorite(!favorite)
       onToggleFavorite?.()
     } finally {
       setBusy(false)
@@ -98,12 +96,12 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
           onClick={toggleFavorite}
           disabled={busy}
           className={`w-full py-2.5 rounded-full text-sm font-medium transition ${
-            favorite
+            isFavorite
               ? 'bg-tomato/10 text-tomato border border-tomato/30'
               : 'bg-ink text-paper hover:opacity-90'
           }`}
         >
-          {favorite ? 'Hapus dari favorit' : 'Simpan ke favorit'}
+          {isFavorite ? 'Hapus dari favorit' : 'Simpan ke favorit'}
         </button>
       </div>
     </div>
