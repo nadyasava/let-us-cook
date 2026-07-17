@@ -6,7 +6,7 @@ const TABS = [
   { id: 'history', label: 'Riwayat' },
 ];
 
-export default function Navbar({ active, onChange }) {
+export default function Navbar({ active, onChange, onLogoClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleTabClick = (id) => {
@@ -21,10 +21,17 @@ export default function Navbar({ active, onChange }) {
         <div className="h-16 flex items-center justify-between">
           
           {/* Logo Section */}
-          <div className="flex items-center gap-3">
-            <img 
-              src="public/logo.png" 
-              alt="LetUsCook Logo" 
+          <button
+            onClick={() => {
+              onLogoClick?.()
+              setIsOpen(false)
+            }}
+            className="flex items-center gap-3 focus:outline-none"
+            aria-label="Kembali ke menu Masak"
+          >
+            <img
+              src="public/logo.png"
+              alt="LetUsCook Logo"
               className="h-9 w-auto object-contain"
               onError={(e) => {
                 e.target.style.display = 'none';
@@ -35,11 +42,11 @@ export default function Navbar({ active, onChange }) {
             />
             {/* Fallback Emoji jika gambar gagal load */}
             <span className="text-2xl hidden">🍳</span>
-            
+
             <span className="font-sans text-lg font-extrabold tracking-tight text-gray-900 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
               LetUsCook!
             </span>
-          </div>
+          </button>
 
           {/* Desktop Navigation (Sembunyi di mobile, muncul di medium screen ke atas) */}
           <nav className="hidden md:flex gap-1 bg-gray-100/80 p-1 rounded-full border border-gray-200/50">

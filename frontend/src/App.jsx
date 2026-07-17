@@ -63,7 +63,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-paper via-paper to-border/20 text-ink pb-20 font-sans antialiased">
-      <Navbar active={tab} onChange={setTab} />
+      <Navbar
+        active={tab}
+        onChange={setTab}
+        onLogoClick={() => {
+          handleReset()
+          setTab("cook")
+        }}
+      />
 
       <main className="px-6 max-w-3xl mx-auto">
         {tab === "cook" && (
@@ -85,17 +92,23 @@ export default function App() {
                 {stepsConfig.map((step, index) => {
                   const isCompleted = activeStep > step.number
                   const isActive = activeStep === step.number
+                  const isReachable = step.number <= activeStep
 
                   return (
                     <div key={step.number} className="flex flex-1 items-center last:flex-none">
 
                       {/* 1. BULATAN & LABEL STEP */}
                       <div className="relative flex flex-col items-center">
-                        <div
+                        <button
+                          type="button"
+                          onClick={() => isReachable && setActiveStep(step.number)}
+                          disabled={!isReachable}
+                          aria-label={`Kembali ke ${step.label}`}
                           className={`
                             w-10 h-10 rounded-full flex items-center justify-center
                             font-bold text-sm transition-all duration-300 transform z-10
                             ${isActive ? 'scale-110 shadow-lg shadow-ink/10 ring-4 ring-ink/15' : 'scale-100'}
+                            ${isReachable ? 'cursor-pointer' : 'cursor-not-allowed'}
                             ${
                               isCompleted || isActive
                                 ? "bg-ink text-paper"
@@ -110,7 +123,7 @@ export default function App() {
                           ) : (
                             step.number
                           )}
-                        </div>
+                        </button>
 
                         <span
                           className={`
